@@ -1,20 +1,33 @@
 extends CharacterBody2D
 
+signal stats_changed(current_health: int, max_health: int, current_ki: int, max_ki: int)
+
 @export var speed: float = 180.0
+@export var max_health: int = 5
+@export var max_ki: int = 5
 @export var attack_damage: int = 1
 @export var attack_time: float = 0.12
 @export var attack_distance: float = 96.0
+@export var ki_projectile_scene: PackedScene
+@export var ki_spawn_distance: float = 72.0
+@export var ki_blast_cost: int = 1
 
 @onready var attack_area: Area2D = $AttackArea
 @onready var attack_shape: CollisionShape2D = $AttackArea/CollisionShape2D
 
+var current_health: int
+var current_ki: int
 var last_direction: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
 
 
 func _ready() -> void:
+	add_to_group("player")
+	current_health = max_health
+	current_ki = max_ki
 	attack_area.monitoring = false
 	attack_shape.disabled = true
+	emit_stats_changed()
 
 
 func _physics_process(_delta: float) -> void:
@@ -29,6 +42,9 @@ func _physics_process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("attack"):
 		attack()
+
+	if Input.is_action_just_pressed("ki_blast"):
+		shoot_ki_projectile()
 
 
 func attack() -> void:
@@ -53,3 +69,37 @@ func attack() -> void:
 	attack_area.monitoring = false
 	attack_shape.disabled = true
 	is_attacking = false
+
+
+func shoot_ki_projectile() -> void:
+	if ki_projectile_scene == null:
+		return
+
+	if current_ki < ki_blast_cost:
+		return
+
+	current_ki -= ki_blast_cost
+	emit_stats_changed()
+
+	var projectile := ki_projectile_scene.instantiate()
+	get_tree().current_scene.add_child(projectile)
+	projectile.global_position = global_position + last_direction * ki_spawn_distance
+	projectile.setup(last_direction)
+
+
+func take_damage(amount: int) -> void:
+	current_health = max(current_health - amount, 0)
+	emit_stats_changed()
+
+
+func get_stats() -> Dictionary:
+	return {
+		"current_health": current_health,
+		"max_health": max_health,
+		"current_ki": current_ki,
+		"max_ki": max_ki,
+	}
+
+
+func emit_stats_changed() -> void:
+	stats_changed.emit(current_health, max_health, current_ki, max_ki)
