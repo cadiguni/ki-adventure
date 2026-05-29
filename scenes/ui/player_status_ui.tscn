@@ -9,13 +9,13 @@ script = ExtResource("1_status_script")
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 236.0
-offset_bottom = 130.0
+offset_bottom = 164.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 212.0
-offset_bottom = 106.0
+offset_bottom = 140.0
 
 [node name="HealthLabel" type="Label" parent="Panel/VBoxContainer"]
 text = "Vida"
@@ -30,3 +30,27 @@ text = "Ki"
 [node name="KiBar" type="ProgressBar" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(200, 22)
 show_percentage = false
+
+[node name="ObjectiveLabel" type="Label" parent="Panel/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+text = "Objetivo: Derrote os invasores (0/3)"
+autowrap_mode = 3
+
+[node name="DialoguePanel" type="Panel" parent="."]
+visible = false
+offset_left = 184.0
+offset_top = 456.0
+offset_right = 920.0
+offset_bottom = 560.0
+
+[node name="MarginContainer" type="MarginContainer" parent="DialoguePanel"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 724.0
+offset_bottom = 92.0
+
+[node name="DialogueLabel" type="Label" parent="DialoguePanel/MarginContainer"]
+layout_mode = 2
+text = "Dialogo"
+autowrap_mode = 3

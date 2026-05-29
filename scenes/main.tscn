@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c0m2m3ht1x2a3" path="res://icon.svg" id="2_epypp"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/basic_enemy.tscn" id="3_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/ui/player_status_ui.tscn" id="4_status_ui"]
+[ext_resource type="PackedScene" path="res://scenes/npcs/master_npc.tscn" id="5_master_npc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
 size = Vector2(1125, 113.5)
@@ -35,6 +36,9 @@ shape = SubResource("RectangleShape2D_q6r6c")
 
 [node name="Player" parent="." unique_id=1150915091 instance=ExtResource("2_0wfyh")]
 position = Vector2(168, 288)
+
+[node name="MasterNPC" parent="." instance=ExtResource("5_master_npc")]
+position = Vector2(304, 288)
 
 [node name="MapBlocks" type="Node2D" parent="." unique_id=655808914]
 

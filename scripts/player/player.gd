@@ -22,6 +22,7 @@ var current_ki: int
 var last_direction: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
 var is_invulnerable: bool = false
+var controls_enabled: bool = true
 
 
 func _ready() -> void:
@@ -34,6 +35,11 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if not controls_enabled:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
 	# Usa as acoes padrao do Godot para movimento em quatro direcoes.
 	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
@@ -51,6 +57,9 @@ func _physics_process(_delta: float) -> void:
 
 
 func attack() -> void:
+	if not controls_enabled:
+		return
+
 	if is_attacking:
 		return
 
@@ -75,6 +84,9 @@ func attack() -> void:
 
 
 func shoot_ki_projectile() -> void:
+	if not controls_enabled:
+		return
+
 	if ki_projectile_scene == null:
 		return
 
@@ -131,3 +143,13 @@ func get_stats() -> Dictionary:
 
 func emit_stats_changed() -> void:
 	stats_changed.emit(current_health, max_health, current_ki, max_ki)
+
+
+func set_controls_enabled(enabled: bool) -> void:
+	controls_enabled = enabled
+
+	if not controls_enabled:
+		velocity = Vector2.ZERO
+		attack_area.monitoring = false
+		attack_shape.disabled = true
+		is_attacking = false

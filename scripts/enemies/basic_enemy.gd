@@ -1,14 +1,18 @@
 extends Area2D
 
+signal defeated
+
 @export var max_health: int = 3
 @export var move_speed: float = 80.0
 @export var contact_damage: int = 1
 
 var health: int
 var target_player: Node2D
+var is_defeated: bool = false
 
 
 func _ready() -> void:
+	add_to_group("quest_enemies")
 	health = max_health
 
 
@@ -21,10 +25,15 @@ func _physics_process(delta: float) -> void:
 
 
 func take_damage(amount: int) -> void:
+	if is_defeated:
+		return
+
 	health -= amount
 
 	# Remove o inimigo da cena quando a vida acaba.
 	if health <= 0:
+		is_defeated = true
+		defeated.emit()
 		queue_free()
 
 
