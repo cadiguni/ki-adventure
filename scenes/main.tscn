@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5hyu2ksismti"]
+[gd_scene format=3 uid="uid://c5hyu2ksismti"]
 
 [ext_resource type="PackedScene" uid="uid://d2sf1ks3un5ha" path="res://scenes/player/Player.tscn" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://c0m2m3ht1x2a3" path="res://icon.svg" id="2_epypp"]
@@ -36,87 +36,87 @@ shape = SubResource("RectangleShape2D_q6r6c")
 [node name="Player" parent="." unique_id=1150915091 instance=ExtResource("2_0wfyh")]
 position = Vector2(168, 288)
 
-[node name="MapBlocks" type="Node2D" parent="."]
+[node name="MapBlocks" type="Node2D" parent="." unique_id=655808914]
 
-[node name="StartAreaMarker" type="Sprite2D" parent="MapBlocks"]
+[node name="StartAreaMarker" type="Sprite2D" parent="MapBlocks" unique_id=1576156431]
+modulate = Color(0.25, 0.8, 0.45, 0.45)
 position = Vector2(168, 288)
 scale = Vector2(1.4, 1.4)
-modulate = Color(0.25, 0.8, 0.45, 0.45)
 texture = ExtResource("2_epypp")
 
-[node name="BarrierOne" type="StaticBody2D" parent="MapBlocks"]
+[node name="BarrierOne" type="StaticBody2D" parent="MapBlocks" unique_id=1918134130]
 
-[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/BarrierOne"]
+[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/BarrierOne" unique_id=1069077538]
+modulate = Color(0.55, 0.55, 0.55, 1)
 position = Vector2(416, 288)
 scale = Vector2(0.57, 2.25)
-modulate = Color(0.55, 0.55, 0.55, 1)
 texture = ExtResource("2_epypp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/BarrierOne"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/BarrierOne" unique_id=818003613]
 position = Vector2(416, 288)
 shape = SubResource("RectangleShape2D_vertical_barrier")
 
-[node name="BarrierTwo" type="StaticBody2D" parent="MapBlocks"]
+[node name="BarrierTwo" type="StaticBody2D" parent="MapBlocks" unique_id=560381163]
 
-[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/BarrierTwo"]
+[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/BarrierTwo" unique_id=605564463]
+modulate = Color(0.55, 0.55, 0.55, 1)
 position = Vector2(624, 448)
 scale = Vector2(2.8, 0.57)
-modulate = Color(0.55, 0.55, 0.55, 1)
 texture = ExtResource("2_epypp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/BarrierTwo"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/BarrierTwo" unique_id=2093635094]
 position = Vector2(624, 448)
 shape = SubResource("RectangleShape2D_horizontal_barrier")
 
-[node name="ArenaMarker" type="Sprite2D" parent="MapBlocks"]
+[node name="ArenaMarker" type="Sprite2D" parent="MapBlocks" unique_id=902003840]
+modulate = Color(0.9, 0.35, 0.25, 0.4)
 position = Vector2(920, 288)
 scale = Vector2(2.2, 2.2)
-modulate = Color(0.9, 0.35, 0.25, 0.4)
 texture = ExtResource("2_epypp")
 
-[node name="ArenaTopWall" type="StaticBody2D" parent="MapBlocks"]
+[node name="ArenaTopWall" type="StaticBody2D" parent="MapBlocks" unique_id=1527918147]
 
-[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/ArenaTopWall"]
+[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/ArenaTopWall" unique_id=2100785995]
+modulate = Color(0.35, 0.35, 0.35, 1)
 position = Vector2(920, 72)
 scale = Vector2(4.4, 0.57)
-modulate = Color(0.35, 0.35, 0.35, 1)
 texture = ExtResource("2_epypp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/ArenaTopWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/ArenaTopWall" unique_id=339020242]
 position = Vector2(920, 72)
 shape = SubResource("RectangleShape2D_arena_wall_horizontal")
 
-[node name="ArenaBottomWall" type="StaticBody2D" parent="MapBlocks"]
+[node name="ArenaBottomWall" type="StaticBody2D" parent="MapBlocks" unique_id=1685835797]
 
-[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/ArenaBottomWall"]
+[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/ArenaBottomWall" unique_id=326769966]
+modulate = Color(0.35, 0.35, 0.35, 1)
 position = Vector2(920, 504)
 scale = Vector2(4.4, 0.57)
-modulate = Color(0.35, 0.35, 0.35, 1)
 texture = ExtResource("2_epypp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/ArenaBottomWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/ArenaBottomWall" unique_id=1762943654]
 position = Vector2(920, 504)
 shape = SubResource("RectangleShape2D_arena_wall_horizontal")
 
-[node name="ArenaRightWall" type="StaticBody2D" parent="MapBlocks"]
+[node name="ArenaRightWall" type="StaticBody2D" parent="MapBlocks" unique_id=113475084]
 
-[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/ArenaRightWall"]
+[node name="Sprite2D" type="Sprite2D" parent="MapBlocks/ArenaRightWall" unique_id=1762844990]
+modulate = Color(0.35, 0.35, 0.35, 1)
 position = Vector2(1240, 288)
 scale = Vector2(0.57, 2.8)
-modulate = Color(0.35, 0.35, 0.35, 1)
 texture = ExtResource("2_epypp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/ArenaRightWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBlocks/ArenaRightWall" unique_id=251847713]
 position = Vector2(1240, 288)
 shape = SubResource("RectangleShape2D_arena_wall_vertical")
 
-[node name="EnemyOne" parent="." instance=ExtResource("3_enemy")]
+[node name="EnemyOne" parent="." unique_id=1452040245 instance=ExtResource("3_enemy")]
 position = Vector2(840, 240)
 
-[node name="EnemyTwo" parent="." instance=ExtResource("3_enemy")]
+[node name="EnemyTwo" parent="." unique_id=2124736216 instance=ExtResource("3_enemy")]
 position = Vector2(1000, 240)
 
-[node name="EnemyThree" parent="." instance=ExtResource("3_enemy")]
+[node name="EnemyThree" parent="." unique_id=222498319 instance=ExtResource("3_enemy")]
 position = Vector2(920, 360)
 
-[node name="PlayerStatusUI" parent="." instance=ExtResource("4_status_ui")]
+[node name="PlayerStatusUI" parent="." unique_id=243077319 instance=ExtResource("4_status_ui")]

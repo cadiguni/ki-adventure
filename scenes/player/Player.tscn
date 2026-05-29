@@ -13,6 +13,7 @@ size = Vector2(80, 64)
 [node name="Node2D" type="Node2D" unique_id=1978040949]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1136498247]
+collision_layer = 2
 script = ExtResource("1_v6fml")
 ki_projectile_scene = ExtResource("2_ltkjv")
 
@@ -25,6 +26,8 @@ shape = SubResource("RectangleShape2D_0hol4")
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1287809078]
 
 [node name="AttackArea" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 4
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea"]

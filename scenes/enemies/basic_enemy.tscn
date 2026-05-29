@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/basic_enemy.gd" id="1_enemy_script"]
 [ext_resource type="Texture2D" uid="uid://c0m2m3ht1x2a3" path="res://icon.svg" id="2_icon"]
@@ -9,7 +9,12 @@ size = Vector2(72, 72)
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 220.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(82, 82)
+
 [node name="BasicEnemy" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_enemy_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -21,9 +26,19 @@ texture = ExtResource("2_icon")
 shape = SubResource("RectangleShape2D_enemy")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_detection")
 
+[node name="ContactDamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea"]
+shape = SubResource("RectangleShape2D_contact")
+
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="ContactDamageArea" to="." method="_on_contact_damage_area_body_entered"]

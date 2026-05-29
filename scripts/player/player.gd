@@ -8,17 +8,20 @@ signal stats_changed(current_health: int, max_health: int, current_ki: int, max_
 @export var attack_damage: int = 1
 @export var attack_time: float = 0.12
 @export var attack_distance: float = 96.0
+@export var invulnerability_time: float = 0.8
 @export var ki_projectile_scene: PackedScene
 @export var ki_spawn_distance: float = 72.0
 @export var ki_blast_cost: int = 1
 
 @onready var attack_area: Area2D = $AttackArea
 @onready var attack_shape: CollisionShape2D = $AttackArea/CollisionShape2D
+@onready var sprite: Sprite2D = $AnimatedSprite2D
 
 var current_health: int
 var current_ki: int
 var last_direction: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
+var is_invulnerable: bool = false
 
 
 func _ready() -> void:
@@ -88,8 +91,33 @@ func shoot_ki_projectile() -> void:
 
 
 func take_damage(amount: int) -> void:
+	if is_invulnerable:
+		return
+
 	current_health = max(current_health - amount, 0)
+	print("Vida do Player: %d/%d" % [current_health, max_health])
 	emit_stats_changed()
+
+	if current_health <= 0:
+		get_tree().reload_current_scene()
+		return
+
+	start_invulnerability()
+
+
+func start_invulnerability() -> void:
+	is_invulnerable = true
+
+	var elapsed_time := 0.0
+	var blink_interval := 0.1
+
+	while elapsed_time < invulnerability_time:
+		sprite.visible = not sprite.visible
+		await get_tree().create_timer(blink_interval).timeout
+		elapsed_time += blink_interval
+
+	sprite.visible = true
+	is_invulnerable = false
 
 
 func get_stats() -> Dictionary:
