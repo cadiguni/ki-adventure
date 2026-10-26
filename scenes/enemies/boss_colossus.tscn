@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_colossus.gd" id="1_boss_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/colossus.png" id="2_colossus"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_projectile.tscn" id="3_enemy_projectile"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(84, 84)
+
+[node name="BossColossus" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_boss_script")
+projectile_scene = ExtResource("3_enemy_projectile")
+max_health = 40
+move_speed = 70.0
+contact_damage = 2
+xp_reward = 30
+counts_for_quest = false
+drop_chance = 1.0
+drop_count = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("2_colossus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="ContactDamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea"]
+shape = SubResource("RectangleShape2D_contact")

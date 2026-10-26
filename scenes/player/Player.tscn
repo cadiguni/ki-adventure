@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/hero_awakened.png" id="4_awakened"]
 [ext_resource type="Texture2D" path="res://assets/sprites/ki_orb.png" id="5_ki_orb"]
 [ext_resource type="Texture2D" path="res://assets/sprites/impact.png" id="6_impact"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/ki_beam.tscn" id="7_ki_beam"]
+[ext_resource type="Texture2D" path="res://assets/sprites/guard.png" id="8_guard"]
 
 [sub_resource type="Shader" id="Shader_aura"]
 code = "// Desenha a silhueta do sprite com uma cor so, somando luz (efeito de brilho).
@@ -38,6 +40,7 @@ script = ExtResource("1_v6fml")
 ki_projectile_scene = ExtResource("2_ltkjv")
 normal_texture = ExtResource("3_hero")
 awakened_texture = ExtResource("4_awakened")
+ki_beam_scene = ExtResource("7_ki_beam")
 
 [node name="Aura" type="Sprite2D" parent="CharacterBody2D"]
 visible = false
@@ -61,6 +64,14 @@ z_index = 1
 texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("5_ki_orb")
+
+[node name="Guard" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+modulate = Color(1, 1, 1, 0.75)
+z_index = 1
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("8_guard")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1773088853]
 position = Vector2(0, 12)

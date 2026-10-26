@@ -5,6 +5,9 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/basic_enemy.tscn" id="3_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/ui/player_status_ui.tscn" id="4_status_ui"]
 [ext_resource type="PackedScene" path="res://scenes/npcs/master_npc.tscn" id="5_master_npc"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/ranged_enemy.tscn" id="6_ranged_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/boss_colossus.tscn" id="7_boss"]
+[ext_resource type="Script" path="res://scripts/world/boss_spawner.gd" id="8_boss_spawner"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
 size = Vector2(1125, 113.5)
@@ -122,5 +125,16 @@ position = Vector2(1000, 240)
 
 [node name="EnemyThree" parent="." unique_id=222498319 instance=ExtResource("3_enemy")]
 position = Vector2(920, 360)
+
+[node name="WatcherOne" parent="." instance=ExtResource("6_ranged_enemy")]
+position = Vector2(600, 180)
+
+[node name="WatcherTwo" parent="." instance=ExtResource("6_ranged_enemy")]
+position = Vector2(560, 540)
+
+[node name="BossSpawner" type="Node2D" parent="."]
+position = Vector2(960, 288)
+script = ExtResource("8_boss_spawner")
+boss_scene = ExtResource("7_boss")
 
 [node name="PlayerStatusUI" parent="." unique_id=243077319 instance=ExtResource("4_status_ui")]

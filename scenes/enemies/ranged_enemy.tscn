@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/ranged_enemy.gd" id="1_ranged_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/watcher.png" id="2_watcher"]
+[ext_resource type="PackedScene" path="res://scenes/projectiles/enemy_projectile.tscn" id="3_enemy_projectile"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(44, 44)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 280.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(48, 48)
+
+[node name="RangedEnemy" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ranged_script")
+projectile_scene = ExtResource("3_enemy_projectile")
+max_health = 2
+move_speed = 70.0
+xp_reward = 6
+counts_for_quest = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("2_watcher")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_detection")
+
+[node name="ContactDamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea"]
+shape = SubResource("RectangleShape2D_contact")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="ContactDamageArea" to="." method="_on_contact_damage_area_body_entered"]

@@ -376,3 +376,229 @@ $ImpactColors = New-Palette @(
 $bitmap = New-Object System.Drawing.Bitmap 11, 11
 Draw-Part $bitmap $ImpactColors $Impact 0 0 11 0
 Save-Bitmap $bitmap "impact.png"
+
+
+# ---------------------------------------------------------------------------
+# Esfera de energia inimiga (8x8): mesmo desenho da esfera de ki, outras cores.
+# ---------------------------------------------------------------------------
+
+$DarkOrbColors = New-Palette @(
+	"B=#a02050",
+	"b=#ff5a8a",
+	"c=#ffe0ea"
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 8, 8
+Draw-Part $bitmap $DarkOrbColors $KiOrb 0 0 8 0
+Save-Bitmap $bitmap "dark_orb.png"
+
+
+# ---------------------------------------------------------------------------
+# Vigia (16x16): inimigo que flutua e atira de longe.
+# ---------------------------------------------------------------------------
+
+$Watcher = @(
+	"................",
+	".....KKKKKK.....",
+	"...KKVVVVVVKK...",
+	"..KVVVVVVVVVVK..",
+	".KVVKKKKKKKKVVK.",
+	".KVKEEEEEEEEKVK.",
+	"KVVKEEERREEEKVVK",
+	"KVVKEERKKREEKVVK",
+	"KVVKEERKKREEKVVK",
+	"KVVKEEERREEEKVVK",
+	".KVKEEEEEEEEKVK.",
+	".KvVKKKKKKKKVvK.",
+	"..KvVVVVVVVVvK..",
+	"...KvKvKKvKvK...",
+	"...Kv.Kv.vK.vK..",
+	"....K..K.K...K.."
+)
+
+$WatcherColors = New-Palette @(
+	"K=#1a1420",
+	"V=#3e8e5a",
+	"v=#2a6040",
+	"E=#f4f4f4",
+	"R=#d43a3a"
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 16, 16
+Draw-Part $bitmap $WatcherColors $Watcher 0 0 16 0
+Save-Bitmap $bitmap "watcher.png"
+
+
+# ---------------------------------------------------------------------------
+# Mestre (16x24): ancião de manto verde com cajado.
+# ---------------------------------------------------------------------------
+
+$Elder = @(
+	"................",
+	"......KKKK...KK.",
+	".....KWWWWK.KYYK",
+	"....KWWWWWWKKYYK",
+	"....KWSSSSWK.KK.",
+	"....KSKSSKSK.KB.",
+	"....KSSSSSSK.KB.",
+	"....KWWssWWK.KB.",
+	"...KGKWWWWKGKKB.",
+	"..KGGKWWWWKGGSB.",
+	"..KGGGKWWKGGGSB.",
+	"..KGgGGKKGGgGKB.",
+	"..KGgGGGGGGgGKB.",
+	"..KSgGGYYGGgK.B.",
+	"...KgGGGGGGgK.B.",
+	"...KgGGGGGGgK.B.",
+	"...KgGGGGGGgK.B.",
+	"...KgGGGGGGgK.B.",
+	"..KgGGGGGGGGgKB.",
+	"..KgGGGGGGGGgKB.",
+	"..KggGGGGGGggKB.",
+	"..KKKKKKKKKKKKB.",
+	"....KBK..KBK..B.",
+	"....KKK..KKK..K."
+)
+
+$ElderColors = New-Palette @(
+	"K=#1a1420",
+	"W=#eeeeee",  # cabelo e barba
+	"S=#e8b48f",
+	"s=#b98466",
+	"G=#3f6b45",  # manto
+	"g=#2c4d31",
+	"Y=#e0b84a",  # cinto e pedra do cajado
+	"B=#7a5230"   # cajado e sandalias
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 16, 24
+Draw-Part $bitmap $ElderColors $Elder 0 0 16 0
+Save-Bitmap $bitmap "elder.png"
+
+
+# ---------------------------------------------------------------------------
+# Colosso Rubro (24x24): chefe de teste.
+# ---------------------------------------------------------------------------
+
+$Colossus = @(
+	"........................",
+	"..KK................KK..",
+	".KhhK..............KhhK.",
+	".KhhhK............KhhhK.",
+	"..KhhhK..........KhhhK..",
+	"...KhhhKKKKKKKKKKhhhK...",
+	"....KKMMMMMMMMMMMMKK....",
+	"...KMMMMMMMMMMMMMMMMK...",
+	"..KMMMMMMMMMMMMMMMMMMK..",
+	"..KMMKKKMMMMMMMMKKKMMK..",
+	"..KMMKYYKMMMMMMKYYKMMK..",
+	"..KMMMKKMMMMMMMMKKMMMK..",
+	"..KMMMMMMMMMMMMMMMMMMK..",
+	"..KmMMKKKKKKKKKKKKMMmK..",
+	"..KmMMKFKFKKKKFKFKMMmK..",
+	"..KmMMMKKKKKKKKKKMMMmK..",
+	".KMKmMMMLLLLLLLLMMMmKMK.",
+	"KMMKmMMLLLLLLLLLLMMmKMMK",
+	"KMMKmMMLLLLLLLLLLMMmKMMK",
+	"KhKKmmMMLLLLLLLLMMmmKKhK",
+	"...KmmmMMMMMMMMMMmmmK...",
+	"...KmmmmKKKKKKKKmmmmK...",
+	"..KmmmmK........KmmmmK..",
+	"..KKKKKK........KKKKKK.."
+)
+
+$ColossusColors = New-Palette @(
+	"K=#1a1420",
+	"M=#b0303a",
+	"m=#7a1e28",
+	"L=#d9775a",  # barriga
+	"h=#e8d9b0",  # chifres e garras
+	"Y=#ffe14d",
+	"F=#ffffff"
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 24, 24
+Draw-Part $bitmap $ColossusColors $Colossus 0 0 24 0
+Save-Bitmap $bitmap "colossus.png"
+
+
+# ---------------------------------------------------------------------------
+# Itens: coracao (cura) e cristal de ki.
+# ---------------------------------------------------------------------------
+
+$Heart = @(
+	".KK...KK.",
+	"KRRK.KRRK",
+	"KRWRKRRRK",
+	"KRRRRRRRK",
+	".KRRRRRK.",
+	"..KRRRK..",
+	"...KRK...",
+	"....K...."
+)
+
+$HeartColors = New-Palette @(
+	"K=#1a1420",
+	"R=#e8364f",
+	"W=#ffd0d8"
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 9, 8
+Draw-Part $bitmap $HeartColors $Heart 0 0 9 0
+Save-Bitmap $bitmap "heart.png"
+
+$KiCrystal = @(
+	"...K...",
+	"..KBK..",
+	".KBWBK.",
+	"KBWBBBK",
+	"KBBBBbK",
+	"KBBBbbK",
+	".KBbbK.",
+	"..KbK..",
+	"...K..."
+)
+
+$KiCrystalColors = New-Palette @(
+	"K=#1a1420",
+	"B=#5ab8ff",
+	"b=#2f7fd0",
+	"W=#ffffff"
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 7, 9
+Draw-Part $bitmap $KiCrystalColors $KiCrystal 0 0 7 0
+Save-Bitmap $bitmap "ki_crystal.png"
+
+
+# ---------------------------------------------------------------------------
+# Escudo da defesa (16x16): anel de energia em volta do heroi.
+# ---------------------------------------------------------------------------
+
+$Guard = @(
+	"......BBBB......",
+	"....BBWWWWBB....",
+	"...BW......WB...",
+	"..BW........WB..",
+	".BW..........WB.",
+	".BW..........WB.",
+	"BW............WB",
+	"BW............WB",
+	"BW............WB",
+	"BW............WB",
+	".BW..........WB.",
+	".BW..........WB.",
+	"..BW........WB..",
+	"...BW......WB...",
+	"....BBWWWWBB....",
+	"......BBBB......"
+)
+
+$GuardColors = New-Palette @(
+	"B=#5ab8ff",
+	"W=#d8f2ff"
+)
+
+$bitmap = New-Object System.Drawing.Bitmap 16, 16
+Draw-Part $bitmap $GuardColors $Guard 0 0 16 0
+Save-Bitmap $bitmap "guard.png"

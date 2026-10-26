@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/projectiles/ki_beam.gd" id="1_beam_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ki_orb.png" id="2_ki_orb"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_glow"]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam"]
+size = Vector2(10, 26)
+
+[node name="KiBeam" type="Node2D"]
+z_index = 1
+script = ExtResource("1_beam_script")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(560, 0)
+
+[node name="GlowLine" type="Line2D" parent="."]
+material = SubResource("CanvasItemMaterial_glow")
+points = PackedVector2Array(0, 0, 10, 0)
+width = 26.0
+default_color = Color(0.35, 0.75, 1, 0.85)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CoreLine" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 10, 0)
+width = 12.0
+default_color = Color(0.92, 0.98, 1, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartOrb" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("2_ki_orb")
+
+[node name="EndOrb" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(10, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("2_ki_orb")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("RectangleShape2D_beam")
