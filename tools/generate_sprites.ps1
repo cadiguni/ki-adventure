@@ -602,3 +602,273 @@ $GuardColors = New-Palette @(
 $bitmap = New-Object System.Drawing.Bitmap 16, 16
 Draw-Part $bitmap $GuardColors $Guard 0 0 16 0
 Save-Bitmap $bitmap "guard.png"
+
+
+# ---------------------------------------------------------------------------
+# Tiles do mapa (16x16 cada), lado a lado em uma unica imagem (tiles.png).
+# A ordem aqui define a coluna de cada tile no atlas, usada por tools/build_map.gd:
+#   0 grama, 1 grama alta, 2 flores, 3 terra, 4 piso da arena,
+#   5 piso rachado, 6 agua, 7 arvore, 8 rocha, 9 muro de pedra
+# Arvore e rocha tem fundo transparente: ficam na camada de obstaculos,
+# por cima da grama.
+# ---------------------------------------------------------------------------
+
+$GrassColors = @(
+	"G=#4f8f3a",
+	"g=#68a84a",
+	"d=#3d7430",
+	"W=#f4f4f4",
+	"Y=#ffd23f",
+	"R=#e05a6a"
+)
+
+$TileGrass = @(
+	"GGGGGGGGGGGGGGGG",
+	"GGGgGGGGGGGGdGGG",
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGdGGGGGGGGG",
+	"GgGGGGGGGGGGGgGG",
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGGGGgGGGGGG",
+	"GGdGGGGGGGGGGGGG",
+	"GGGGGGGGGGGGGGdG",
+	"GGGGGgGGGGGGGGGG",
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGGGGGdGGGGG",
+	"GgGGGGGGGGGGGGGG",
+	"GGGGGGGGGGGGGgGG",
+	"GGGGGdGGGGGGGGGG",
+	"GGGGGGGGGGGGGGGG"
+)
+
+$TileTallGrass = @(
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGGGGGGGGGGG",
+	"GGgGgGGGGGGGGGGG",
+	"GGdgdGGGGGGGGGGG",
+	"GGGdGGGGGGGgGgGG",
+	"GGGGGGGGGGGdgdGG",
+	"GGGGGGGGGGGGdGGG",
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGgGgGGGGGGG",
+	"GGGGGGdgdGGGGGGG",
+	"GGGGGGGdGGGGGGGG",
+	"GGGGGGGGGGGGGGGG",
+	"GgGgGGGGGGGGgGgG",
+	"GdgdGGGGGGGGdgdG",
+	"GGdGGGGGGGGGGdGG",
+	"GGGGGGGGGGGGGGGG"
+)
+
+$TileFlowers = @(
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGGGGGGWGGGG",
+	"GGGWGGGGGGWYWGGG",
+	"GGWYWGGGGGGWGGGG",
+	"GGGWGGGGGGGdGGGG",
+	"GGGdGGGGGGGGGGGG",
+	"GGGGGGGGGGGGGGGG",
+	"GGGGGGGRGGGGGGGG",
+	"GGGGGGRYRGGGGGGG",
+	"GGGGGGGRGGGGGGGG",
+	"GGGGGGGdGGGGGWGG",
+	"GGGGGGGGGGGGWYWG",
+	"GGWGGGGGGGGGGWGG",
+	"GWYWGGGGGGGGGdGG",
+	"GGWGGGGGGGGGGGGG",
+	"GGdGGGGGGGGGGGGG"
+)
+
+$DirtColors = @(
+	"D=#b08a5a",
+	"e=#8f6d44",
+	"f=#c9a46e"
+)
+
+$TileDirt = @(
+	"DDDDDDDDDDDDDDDD",
+	"DDDDeDDDDDDDDDDD",
+	"DDDDDDDDDDfDDDDD",
+	"DDfDDDDDDDDDDDDD",
+	"DDDDDDDDeDDDDDeD",
+	"DDDDDDDDDDDDDDDD",
+	"DeDDDDfDDDDDDDDD",
+	"DDDDDDDDDDDDDfDD",
+	"DDDDDDDDDDDDDDDD",
+	"DDDDeDDDDDDeDDDD",
+	"DDDDDDDDDDDDDDDD",
+	"DDfDDDDDDfDDDDDD",
+	"DDDDDDDDDDDDDDeD",
+	"DDDDDDeDDDDDDDDD",
+	"DeDDDDDDDDDDfDDD",
+	"DDDDDDDDDDDDDDDD"
+)
+
+$FloorColors = @(
+	"S=#9a958c",
+	"s=#b0aba1",
+	"m=#6f6a63",
+	"c=#55504a"
+)
+
+$TileFloor = @(
+	"SSSSSSSmSSSSSSSm",
+	"SsSSSSSmSSSSsSSm",
+	"SSSSSSSmSSSSSSSm",
+	"SSSSSSSmSSSSSSSm",
+	"SSSSsSSmSsSSSSSm",
+	"SSSSSSSmSSSSSSSm",
+	"SSSSSSSmSSSSSSSm",
+	"mmmmmmmmmmmmmmmm",
+	"SSSSSSSmSSSSSSSm",
+	"SSSsSSSmSSSSSSSm",
+	"SSSSSSSmSSSSSsSm",
+	"SSSSSSSmSSSSSSSm",
+	"SsSSSSSmSSSSSSSm",
+	"SSSSSSSmSSSsSSSm",
+	"SSSSSSSmSSSSSSSm",
+	"mmmmmmmmmmmmmmmm"
+)
+
+$TileFloorCracked = @(
+	"SSSSSSSmSSSSSSSm",
+	"SsSSSSSmSSSSsSSm",
+	"SSScSSSmSSSSSSSm",
+	"SSSScSSmSSSSSSSm",
+	"SSSSScSmSsSSSSSm",
+	"SSSSScSmSSSSSSSm",
+	"SSSSSScmSSSSSSSm",
+	"mmmmmmmmmmmmmmmm",
+	"SSSSSSSmSSSSSSSm",
+	"SSSSSSSmScSSSSSm",
+	"SsSSSSSmSScSSSSm",
+	"SSSSSSSmSSScSSSm",
+	"SSSSSSSmSSScSSSm",
+	"SSSSsSSmSSSScSSm",
+	"SSSSSSSmSSSSSSSm",
+	"mmmmmmmmmmmmmmmm"
+)
+
+$WaterColors = @(
+	"B=#3a7bd5",
+	"b=#5a9ae8",
+	"l=#a8d4ff"
+)
+
+$TileWater = @(
+	"BBBBBBBBBBBBBBBB",
+	"BBBBBBBBBBBBBBBB",
+	"BBlbBBBBBBBBBBBB",
+	"BBBBlbBBBBBBBBBB",
+	"BBBBBBBBBBBlbBBB",
+	"BBBBBBBBBBBBBlbB",
+	"BBBBBBBBBBBBBBBB",
+	"BBBBBBBBBBBBBBBB",
+	"BBBBBBlbBBBBBBBB",
+	"BBBBBBBBlbBBBBBB",
+	"BBBBBBBBBBBBBBBB",
+	"BlbBBBBBBBBBBBBB",
+	"BBBlbBBBBBBBBlbB",
+	"BBBBBBBBBBBBBBBl",
+	"BBBBBBBBBBBBBBBB",
+	"BBBBBBBBBBBBBBBB"
+)
+
+$TreeColors = @(
+	"K=#1a1420",
+	"L=#3c8a3e",
+	"l=#5fb04f",
+	"D=#2a6230",
+	"N=#7a5230"
+)
+
+$TileTree = @(
+	"....KKKKKKKK....",
+	"..KKLLLLLLLLKK..",
+	".KLLLlLLLLLLLLK.",
+	".KLlLLLLLlLLLLK.",
+	"KLLLLLLLLLLLlLLK",
+	"KLLLLLlLLLLLLLLK",
+	"KLlLLLLLLLLLLLLK",
+	"KLLLLLLLLLlLLLDK",
+	"KDLLLlLLLLLLLDDK",
+	".KDDLLLLLLLLDDK.",
+	"..KKDDDDDDDDKK..",
+	"....KKKNNKKK....",
+	"......KNNK......",
+	"......KNNK......",
+	".....KNNNNK.....",
+	"......KKKK......"
+)
+
+$RockColors = @(
+	"K=#1a1420",
+	"R=#8a8580",
+	"r=#b5b0aa",
+	"d=#625e5a"
+)
+
+$TileRock = @(
+	"................",
+	"................",
+	"................",
+	".....KKKKKK.....",
+	"...KKRRRRrRKK...",
+	"..KRRrRRRRRRRK..",
+	"..KRrRRRRRRRRK..",
+	".KRRRRRRRRRRRRK.",
+	".KRRRRRRRRRRRdK.",
+	".KRRRRRRRRRRdRK.",
+	".KdRRRRRRRRRddK.",
+	".KddRRRRRRRdddK.",
+	"..KddddddddddK..",
+	"...KKKKKKKKKK...",
+	"................",
+	"................"
+)
+
+$WallColors = @(
+	"K=#3a3640",
+	"Q=#7d7880",
+	"q=#9b96a0"
+)
+
+$TileWall = @(
+	"qqqqqqqKqqqqqqqK",
+	"QQQQQQQKQQQQQQQK",
+	"QQQQQQQKQQQQQQQK",
+	"QQQQQQQKQQQQQQQK",
+	"QQQQQQQKQQQQQQQK",
+	"KKKKKKKKKKKKKKKK",
+	"qqqKqqqqqqqKqqqq",
+	"QQQKQQQQQQQKQQQQ",
+	"QQQKQQQQQQQKQQQQ",
+	"QQQKQQQQQQQKQQQQ",
+	"QQQKQQQQQQQKQQQQ",
+	"KKKKKKKKKKKKKKKK",
+	"qqqqqqqKqqqqqqqK",
+	"QQQQQQQKQQQQQQQK",
+	"QQQQQQQKQQQQQQQK",
+	"KKKKKKKKKKKKKKKK"
+)
+
+# Cada item: desenho e paleta, na ordem das colunas do atlas.
+$Tiles = @(
+	@($TileGrass, $GrassColors),
+	@($TileTallGrass, $GrassColors),
+	@($TileFlowers, $GrassColors),
+	@($TileDirt, $DirtColors),
+	@($TileFloor, $FloorColors),
+	@($TileFloorCracked, $FloorColors),
+	@($TileWater, $WaterColors),
+	@($TileTree, $TreeColors),
+	@($TileRock, $RockColors),
+	@($TileWall, $WallColors)
+)
+
+$bitmap = New-Object System.Drawing.Bitmap ($Tiles.Count * 16), 16
+for ($i = 0; $i -lt $Tiles.Count; $i++) {
+	$palette = New-Palette $Tiles[$i][1]
+	Draw-Part $bitmap $palette $Tiles[$i][0] ($i * 16) 0 16 0
+}
+Save-Bitmap $bitmap "tiles.png"

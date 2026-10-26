@@ -19,7 +19,7 @@ const ENRAGED_COLOR := Color(1.0, 0.75, 0.75)
 @export var recover_duration: float = 0.8
 @export var ring_projectile_count: int = 10
 # Area onde o chefe pode andar (dentro da arena), em coordenadas globais.
-@export var movement_bounds: Rect2 = Rect2(690, 140, 490, 300)
+@export var movement_bounds: Rect2 = Rect2(1250, 240, 525, 480)
 
 var state: State = State.CHASE
 var state_time: float = 0.0
