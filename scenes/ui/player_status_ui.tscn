@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/player_status_ui.gd" id="1_status_script"]
 
@@ -36,6 +36,19 @@ visible = false
 custom_minimum_size = Vector2(200, 0)
 text = "Objetivo: Derrote os invasores (0/3)"
 autowrap_mode = 3
+
+[node name="ControlsLabel" type="Label" parent="."]
+offset_left = 752.0
+offset_top = 16.0
+offset_right = 1136.0
+offset_bottom = 140.0
+text = "Setas: andar
+Z: combo de socos (3 golpes)
+X: rajada de ki (segure para carregar)
+C (segurar): concentrar ki
+V: Forma Desperta (precisa de 50 de ki)
+E: conversar"
+horizontal_alignment = 2
 
 [node name="DialoguePanel" type="Panel" parent="."]
 visible = false

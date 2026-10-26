@@ -1,14 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2sf1ks3un5ha"]
+[gd_scene format=3 uid="uid://d2sf1ks3un5ha"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_v6fml"]
-[ext_resource type="Texture2D" uid="uid://c0m2m3ht1x2a3" path="res://icon.svg" id="2_3li8b"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/ki_projectile.tscn" id="2_ltkjv"]
+[ext_resource type="Texture2D" path="res://assets/sprites/hero.png" id="3_hero"]
+[ext_resource type="Texture2D" path="res://assets/sprites/hero_awakened.png" id="4_awakened"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ki_orb.png" id="5_ki_orb"]
+[ext_resource type="Texture2D" path="res://assets/sprites/impact.png" id="6_impact"]
+
+[sub_resource type="Shader" id="Shader_aura"]
+code = "// Desenha a silhueta do sprite com uma cor so, somando luz (efeito de brilho).
+shader_type canvas_item;
+render_mode blend_add;
+
+uniform vec4 aura_color : source_color = vec4(0.45, 0.8, 1.0, 0.45);
+
+void fragment() {
+	float alpha = texture(TEXTURE, UV).a;
+	COLOR = vec4(aura_color.rgb, alpha * aura_color.a);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aura"]
+shader = SubResource("Shader_aura")
+shader_parameter/aura_color = Color(0.45, 0.8, 1, 0.45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0hol4"]
-size = Vector2(126, 127)
+size = Vector2(36, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(80, 64)
+size = Vector2(56, 56)
 
 [node name="Node2D" type="Node2D" unique_id=1978040949]
 
@@ -16,11 +36,34 @@ size = Vector2(80, 64)
 collision_layer = 2
 script = ExtResource("1_v6fml")
 ki_projectile_scene = ExtResource("2_ltkjv")
+normal_texture = ExtResource("3_hero")
+awakened_texture = ExtResource("4_awakened")
 
-[node name="AnimatedSprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=411851511]
-texture = ExtResource("2_3li8b")
+[node name="Aura" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_aura")
+scale = Vector2(3.45, 3.45)
+texture = ExtResource("3_hero")
+hframes = 4
+vframes = 3
+
+[node name="Sprite" type="Sprite2D" parent="CharacterBody2D" unique_id=411851511]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("3_hero")
+hframes = 4
+vframes = 3
+
+[node name="KiChargeOrb" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
+z_index = 1
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("5_ki_orb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1773088853]
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_0hol4")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1287809078]
@@ -33,3 +76,10 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea"]
 shape = SubResource("RectangleShape2D_attack")
 disabled = true
+
+[node name="Impact" type="Sprite2D" parent="CharacterBody2D/AttackArea"]
+visible = false
+z_index = 1
+texture_filter = 1
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("6_impact")

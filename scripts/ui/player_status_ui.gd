@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const AWAKENED_KI_COLOR := Color(0.6, 0.95, 1.0)
+
 @onready var health_bar: ProgressBar = $Panel/VBoxContainer/HealthBar
 @onready var ki_bar: ProgressBar = $Panel/VBoxContainer/KiBar
 @onready var health_label: Label = $Panel/VBoxContainer/HealthLabel
@@ -7,6 +9,8 @@ extends CanvasLayer
 @onready var objective_label: Label = $Panel/VBoxContainer/ObjectiveLabel
 @onready var dialogue_panel: Panel = $DialoguePanel
 @onready var dialogue_label: Label = $DialoguePanel/MarginContainer/DialogueLabel
+
+var is_awakened: bool = false
 
 
 func _ready() -> void:
@@ -23,21 +27,29 @@ func _ready() -> void:
 		return
 
 	player.connect("stats_changed", Callable(self, "update_bars"))
+	player.connect("transformation_changed", Callable(self, "_on_transformation_changed"))
 
 	var stats: Dictionary = player.call("get_stats")
 	update_bars(stats["current_health"], stats["max_health"], stats["current_ki"], stats["max_ki"])
 
 
-func update_bars(current_health: int, max_health: int, current_ki: int, max_ki: int) -> void:
+func update_bars(current_health: int, max_health: int, current_ki: float, max_ki: float) -> void:
 	health_label.text = "Vida: %d/%d" % [current_health, max_health]
 	health_bar.max_value = max_health
 	health_bar.value = current_health
 	health_bar.tooltip_text = "Vida: %d/%d" % [current_health, max_health]
 
-	ki_label.text = "Ki: %d/%d" % [current_ki, max_ki]
+	ki_label.text = "Ki: %d/%d" % [int(current_ki), int(max_ki)]
+	if is_awakened:
+		ki_label.text += "  - FORMA DESPERTA"
 	ki_bar.max_value = max_ki
 	ki_bar.value = current_ki
-	ki_bar.tooltip_text = "Ki: %d/%d" % [current_ki, max_ki]
+	ki_bar.tooltip_text = "Ki: %d/%d" % [int(current_ki), int(max_ki)]
+
+
+func _on_transformation_changed(is_active: bool) -> void:
+	is_awakened = is_active
+	ki_bar.modulate = AWAKENED_KI_COLOR if is_active else Color.WHITE
 
 
 func show_dialogue_line(text: String) -> void:
